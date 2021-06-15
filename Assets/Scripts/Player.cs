@@ -11,12 +11,15 @@ public class Player : MonoBehaviour
     private bool _playerChargeState = false; // false means a negetive charge (also default), true is a positive charge
     private bool _playerRunState = false;
     public Sprite[] spriteArray;
+    public int defaultAdditionalJumps = 1;
+    int additionalJumps;
 
     // Player ground checks
     public bool isGrounded = false;
     public Transform isGroundedChecker;
     public float checkGroundRadius;
     public LayerMask groundLayer;
+    private bool _landingSoundCanPlay = false;
 
     [SerializeField]
     private float _moveSpeed = 2f;
@@ -66,6 +69,9 @@ public class Player : MonoBehaviour
         if (colliders != null)
         {
             isGrounded = true;
+            if (_landingSoundCanPlay && _rigidBody.velocity.y <= 0) SoundManager.PlaySound("land");
+            additionalJumps = defaultAdditionalJumps;
+            _landingSoundCanPlay = false;
         }
         else
         {
@@ -74,6 +80,7 @@ public class Player : MonoBehaviour
                 lastTimeGrounded = Time.time;
             }
             isGrounded = false;
+            _landingSoundCanPlay = true;
         }
     }
 
@@ -99,10 +106,13 @@ public class Player : MonoBehaviour
 
     void PlayerJump()
     {
-        if ((Input.GetKeyDown(KeyCode.UpArrow) || Input.GetButtonDown("Fire1") || Input.GetButtonDown("Fire2")) && (isGrounded || Time.time - lastTimeGrounded <= rememberGroundedFor))
+        if ((Input.GetKeyDown("space") || Input.GetButtonDown("Fire1") || Input.GetButtonDown("Fire2"))
+            && (isGrounded || Time.time - lastTimeGrounded <= rememberGroundedFor || additionalJumps > 0))
         {
-            SoundManager.PlaySound("jump_01");
+            SoundManager.PlaySound("jump");
             _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, _jumpForce);
+            additionalJumps--;
+            _landingSoundCanPlay = true;
         }
     }
 

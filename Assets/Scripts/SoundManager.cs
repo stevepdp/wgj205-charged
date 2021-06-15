@@ -10,6 +10,7 @@ public class SoundManager : MonoBehaviour
     void Start()
     {
         playerJumpSound = Resources.Load<AudioClip>("SFX/jump_04");
+        playerLandSound = Resources.Load<AudioClip>("SFX/land_04"); //03
 
         audioSource = GetComponent<AudioSource>();
     }
@@ -18,8 +19,12 @@ public class SoundManager : MonoBehaviour
     {
         switch(clip)
         {
-            case "jump_01":
+            case "jump":
                 audioSource.PlayOneShot(playerJumpSound);
+                break;
+
+            case "land":
+                audioSource.PlayOneShot(playerLandSound);
                 break;
         }
     }
