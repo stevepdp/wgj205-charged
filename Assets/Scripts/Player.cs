@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -9,8 +10,8 @@ public class Player : MonoBehaviour
 
     // player play state
     private bool _playerChargeState = false; // false means a negetive charge (also default), true is a positive charge
+    private bool _playerIsDead = false;
     private bool _playerRunState = false;
-    public Sprite[] spriteArray;
     public int defaultAdditionalJumps = 1;
     int additionalJumps;
 
@@ -30,7 +31,6 @@ public class Player : MonoBehaviour
     public float rememberGroundedFor;
     float lastTimeGrounded;
 
-
     private float horizontalInput;
     private float verticalInput;
 
@@ -38,23 +38,49 @@ public class Player : MonoBehaviour
     private GameManager _gameManager;
     private SpriteRenderer _spriteRenderer;
     private Rigidbody2D _rigidBody;
-  
+
+    // floater text
+    [SerializeField]
+    Text mTextOverHead;
+    Transform mTransform;
+    Transform mTextOverTransform;
+    private float _textDistFromPlayer = 52; // player is 28x24. font height is 24. So 28+24 = 44                                            
+
+    private void Awake()
+    {
+        mTransform = transform;
+        mTextOverTransform = mTextOverHead.transform;
+    }
 
     void Start()
     {
         _animator = GetComponent<Animator>();
         _rigidBody = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
+
+        //transform.position = new Vector3(-1, 0, 0);
+
         SetPlayerDefaults();
+    }
+
+    void LateUpdate()
+    {
+        Vector3 screenPos = Camera.main.WorldToScreenPoint(mTransform.position);
+        // add a tiny bit of height?
+        screenPos.y += _textDistFromPlayer;
+        mTextOverTransform.position = screenPos;
     }
 
 
     void Update()
     {
-        PlayerMove();
-        PlayerJump();
-        BetterJump();
-        PlayerInvertCharge();
+        if (!_playerIsDead)
+        {
+            PlayerMove();
+            PlayerJump();
+            BetterJump();
+            PlayerInvertCharge();
+        }
         CheckIfGrounded();
 
         // Update animation bools
@@ -90,6 +116,15 @@ public class Player : MonoBehaviour
         {
             _playerChargeState = !_playerChargeState;
         }
+
+        if (_playerChargeState)
+        {
+            mTextOverHead.text = "+";
+        }
+        else
+        {
+            mTextOverHead.text = "-";
+        }
     }
 
     void BetterJump()
@@ -104,9 +139,16 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void OnPlayerDead()
+    {
+        _playerIsDead = true;
+        _animator.SetTrigger("Dead");
+        Debug.Log("Player deaded.");
+    }
+
     void PlayerJump()
     {
-        if ((Input.GetKeyDown("space") || Input.GetButtonDown("Fire1") || Input.GetButtonDown("Fire2"))
+        if ((Input.GetKeyDown(KeyCode.UpArrow) || Input.GetButtonDown("Fire1") || Input.GetButtonDown("Fire2"))
             && (isGrounded || Time.time - lastTimeGrounded <= rememberGroundedFor || additionalJumps > 0))
         {
             SoundManager.PlaySound("jump");

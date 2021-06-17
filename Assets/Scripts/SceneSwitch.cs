@@ -15,7 +15,7 @@ public class SceneSwitch : MonoBehaviour {
         string sceneName = SceneManager.GetActiveScene().name;
 
         // switch scenes
-        if (Input.GetKeyDown("space"))
+        if (Input.GetKeyDown("space") || Input.GetButtonDown("Start") || Input.GetButtonDown("Fire1"))
         {
             switch (sceneName)
             {

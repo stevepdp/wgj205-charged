@@ -7,6 +7,9 @@ TagManager:
   - Enemy
   - GameManager
   - Ground
+  - Wall
+  - DeadZone
+  - Box
   layers:
   - Default
   - TransparentFX
