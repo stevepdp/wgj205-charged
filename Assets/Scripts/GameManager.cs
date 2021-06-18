@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     // Game Values
-    private int _coinCount;
+    public int _coinCount;
 
     // Game States
 

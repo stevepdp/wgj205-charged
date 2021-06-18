@@ -10,7 +10,9 @@ public class Player : MonoBehaviour
     [SerializeField]
     private int _playerChargeNo;
     public string _directionFacing = "right";
+    [SerializeField]
     private bool _playerIsDead = false;
+    public bool _playerIsExiting = false;
     private bool _playerRunState = false;
     private bool _playerHasBox = false;
     public int defaultAdditionalJumps = 1;
@@ -87,20 +89,24 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if (!_playerIsDead)
+        if (_playerIsDead == false && _playerIsExiting == false)
         {
             PlayerMove();
             PlayerJump();
             BetterJump();
             PlayerInvertCharge();
             PlayerGrabStorageBox();
-        }
-        CheckIfGrounded();
+            CheckIfGrounded();
 
-        // Update animation bools
-        _animator.SetBool("Grounded", isGrounded);
-        _animator.SetBool("Charge", _playerChargeState);
-        _animator.SetBool("Running", _playerRunState);
+            // Update animation bools
+            _animator.SetBool("Grounded", isGrounded);
+            _animator.SetBool("Charge", _playerChargeState);
+            _animator.SetBool("Running", _playerRunState);
+        }
+
+        if (_playerIsExiting == true || _playerIsDead == true) {
+            PlayerFreeze();
+        }
     }
 
     void CheckIfGrounded()
@@ -136,7 +142,6 @@ public class Player : MonoBehaviour
         {
             mTextOverHead.text = "+";
             _playerChargeNo = (int) charge.positive;
-            
         }
         else
         {
@@ -235,6 +240,12 @@ public class Player : MonoBehaviour
         }
     }
 
+    void PlayerFreeze()
+    {
+        _rigidBody.velocity = new Vector2(0, 0);
+        _animator.SetBool("Running", false);
+    }
+
     void PlayerMove()
     {
         // flip player transform according to facing direction
@@ -259,7 +270,7 @@ public class Player : MonoBehaviour
         // handle left/right movement
         horizontalInput = Input.GetAxisRaw("Horizontal");
         float moveBy = horizontalInput * _moveSpeed;
-        _rigidBody.velocity = new Vector2(moveBy, _rigidBody.velocity.y); 
+        if (!_playerIsExiting) _rigidBody.velocity = new Vector2(moveBy, _rigidBody.velocity.y);
     }
 
     void SetPlayerDefaults()
