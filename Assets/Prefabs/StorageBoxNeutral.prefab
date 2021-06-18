@@ -147,6 +147,6 @@ MonoBehaviour:
   boxCharge: 0
   player: {fileID: 6506611533364773297, guid: df322c0955fc21e4685b0181524b4dab, type: 3}
   _distanceFromPlayer: 0
-  distanceThreshold: 0
+  distanceThreshold: 1.25
   _directionNo: 0
   isDeadly: 0

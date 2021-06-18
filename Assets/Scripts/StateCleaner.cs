@@ -6,13 +6,22 @@ public class StateCleaner : MonoBehaviour
 {
     private void Start()
     {
-        GameObject[] objs = GameObject.FindGameObjectsWithTag("GameManager");
+        GameObject[] gObjs = GameObject.FindGameObjectsWithTag("GameManager");
 
-        if (objs.Length > 0)
+        if (gObjs.Length > 0)
         {
             //Destroy(this.gameObject);
-            Destroy(objs[0]); // destroy the old one
+            Destroy(gObjs[0]); // destroy the old one
             Debug.Log("Destroyed old game manager");
+        }
+
+        GameObject[] cObjs = GameObject.FindGameObjectsWithTag("CoinTotalTracker");
+
+        if (cObjs.Length > 0)
+        {
+            //Destroy(this.gameObject);
+            Destroy(cObjs[0]); // destroy the old one
+            Debug.Log("Destroyed old coin tracker");
         }
     }
 }

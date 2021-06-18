@@ -2,36 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     // Game Values
     public int _coinCount;
-
-    // Game States
-
-    // Input Values
-    private float _horizontalInput;
-    private float _verticalInput;
-
-    // IEnumerators
+    public Text coinDisplay;
 
 
     void Awake()
     {
+        SetGameDefaults();
     }
 
     void Start()
     {
-        SetGameDefaults();
+        
     }
 
-    void Update()
+    void LateUpdate()
     {
-    }
-
-    private void LateUpdate()
-    {
+        coinDisplay.text = _coinCount.ToString();
     }
 
    public void OnRoomRestart()

@@ -11,6 +11,8 @@ TagManager:
   - DeadZone
   - Box
   - Coin
+  - CoinsReadout
+  - CoinTotalTracker
   layers:
   - Default
   - TransparentFX
