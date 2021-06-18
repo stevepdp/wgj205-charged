@@ -20,8 +20,10 @@ public class SceneSwitch : MonoBehaviour {
             switch (sceneName)
             {
                 case "00_Start":
-                    SceneManager.LoadScene("10_Room01");
+                    SceneManager.LoadScene("10_Room_01");
                     break;
+
+                // scenes in between progress on room exit
 
                 case "99_End":
                     SceneManager.LoadScene("00_Start");

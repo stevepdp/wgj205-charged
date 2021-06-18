@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     // player play state
     private bool _playerChargeState = true; // false means a negetive charge (also default), true is a positive charge
     [SerializeField]
-    private int _playerChargeNo;
+    public int _playerChargeNo;
     public string _directionFacing = "right";
     [SerializeField]
     private bool _playerIsDead = false;

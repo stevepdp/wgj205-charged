@@ -9,7 +9,8 @@ public class StorageBox : MonoBehaviour
     private bool _canMove = true;
     [SerializeField]
     private float _distanceFromPlayer;
-    public float distanceThreshold;
+    [SerializeField]
+    private float distanceThreshold = 1f;
     [SerializeField]
     private float _directionNo;
     public bool isDeadly = false;
@@ -73,13 +74,22 @@ public class StorageBox : MonoBehaviour
 
     void SeekPlayer()
     {
-        // if canMove
-        // if the player is within 1 meter of me
-            // if player is facing left of me
-                // apply force right to left
+        if (_canMove)
+        {
+            if ((_distanceFromPlayer < distanceThreshold) && player.GetComponent<Player>()._playerChargeNo != boxCharge) // only opposites attract
+            {
+                // player is left of me
+                if (_directionNo == 1)
+                {
+                    gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0.33f, 0), ForceMode2D.Impulse); // FIRE LEFT
                     
-
-        // another function to handle detaching from player
-            // 
+                }
+                // player is right of me
+                else if (_directionNo == -1)
+                {
+                    gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(-0.33f, 0), ForceMode2D.Impulse); // FIRE RIGHT  
+                }
+            }
+        }
     }
 }
