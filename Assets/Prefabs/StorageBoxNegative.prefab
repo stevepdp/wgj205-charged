@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4846949113776239926}
   - component: {fileID: 4846949113776239923}
   - component: {fileID: 4846949113776239924}
+  - component: {fileID: 1561566768006947533}
   m_Layer: 3
   m_Name: StorageBoxNegative
   m_TagString: Box
@@ -129,5 +130,22 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &1561566768006947533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4846949113776239927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8d3cf92b889cd14e9284556f065e66e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boxCharge: 1
+  player: {fileID: 6506611533364773297, guid: df322c0955fc21e4685b0181524b4dab, type: 3}
+  _distanceFromPlayer: 0
+  distanceThreshold: 0
+  _directionNo: 0
