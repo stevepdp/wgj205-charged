@@ -8,9 +8,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Scenes/00_Start.unity
     guid: 25ac71ae37038114ab655128212367fb
-  - enabled: 0
-    path: Assets/_Scenes/10_Room_00.unity
-    guid: 1a6ad45cd078fd1428d879164a4b5f99
   - enabled: 1
     path: Assets/_Scenes/10_Room_01.unity
     guid: 3861aa8e8c365804ba9e7eb4c6590712
@@ -20,6 +17,18 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Scenes/10_Room_03.unity
     guid: 1dd72096cd3468a43a8f407ae632fbc4
+  - enabled: 1
+    path: Assets/_Scenes/10_Room_04.unity
+    guid: efcb1a2a01e227e41ab08edee837f206
+  - enabled: 1
+    path: Assets/_Scenes/10_Room_05.unity
+    guid: 6ece2d801372064428c0ace8835a374c
+  - enabled: 1
+    path: Assets/_Scenes/10_Room_06.unity
+    guid: 1d5228019b3f3e942bbbad2a9672e2d6
+  - enabled: 1
+    path: Assets/_Scenes/10_Room_07.unity
+    guid: 040f404e81bd84744862a48dd2d3215b
   - enabled: 1
     path: Assets/_Scenes/99_End.unity
     guid: f73ac395c83e19b4cbc1e09ba281cb1c

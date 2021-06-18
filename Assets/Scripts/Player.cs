@@ -190,10 +190,12 @@ public class Player : MonoBehaviour
 
                     if (_directionFacing == "right")
                     {
+                        Debug.Log("Fire 1");
                         child.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(7.5f, 0), ForceMode2D.Impulse); // FIRE RIGHT
                     }
                     else
                     {
+                        Debug.Log("Fire 2");
                         child.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(-7.5f, 0), ForceMode2D.Impulse); // FIRE LEFT
                     }
                 }
