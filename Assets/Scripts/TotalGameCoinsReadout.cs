@@ -7,9 +7,15 @@ public class TotalGameCoinsReadout : MonoBehaviour
 {
     public Text totalGameCoinsText;
     public CoinTotalTracker coinTotalTracker;
+    private GameObject _musicManager;
 
+    private void Awake()
+    {
+        _musicManager = GameObject.FindGameObjectWithTag("MusicManager");
+    }
     private void Start()
     {
+        if (_musicManager != null) _musicManager.GetComponent<MusicManager>().StopMusic();
         coinTotalTracker = GameObject.Find("CoinTotalTracker").GetComponent<CoinTotalTracker>();
     }
 

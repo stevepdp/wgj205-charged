@@ -13,6 +13,7 @@ TagManager:
   - Coin
   - CoinsReadout
   - CoinTotalTracker
+  - MusicManager
   layers:
   - Default
   - TransparentFX

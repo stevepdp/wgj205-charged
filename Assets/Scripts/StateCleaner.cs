@@ -7,7 +7,6 @@ public class StateCleaner : MonoBehaviour
     private void Start()
     {
         GameObject[] gObjs = GameObject.FindGameObjectsWithTag("GameManager");
-
         if (gObjs.Length > 0)
         {
             //Destroy(this.gameObject);
@@ -15,13 +14,20 @@ public class StateCleaner : MonoBehaviour
             Debug.Log("Destroyed old game manager");
         }
 
-        GameObject[] cObjs = GameObject.FindGameObjectsWithTag("CoinTotalTracker");
-
-        if (cObjs.Length > 0)
+        gObjs = GameObject.FindGameObjectsWithTag("CoinTotalTracker");
+        if (gObjs.Length > 0)
         {
             //Destroy(this.gameObject);
-            Destroy(cObjs[0]); // destroy the old one
+            Destroy(gObjs[0]); // destroy the old one
             Debug.Log("Destroyed old coin tracker");
+        }
+
+        gObjs = GameObject.FindGameObjectsWithTag("MusicManager");
+        if (gObjs.Length > 0)
+        {
+            //Destroy(this.gameObject);
+            Destroy(gObjs[0]); // destroy the old one
+            Debug.Log("Destroyed old music manager");
         }
     }
 }
