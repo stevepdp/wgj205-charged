@@ -2,17 +2,30 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    [SerializeField] Transform player;
+    Player player;
+    Transform playerTransform;
     [SerializeField] Vector3 cameraOffset;
+
+    void Awake()
+    {
+        GetPlayer();
+    }
 
     void LateUpdate()
     {
         FollowPlayer();
     }
 
+    void GetPlayer()
+    {
+        player = FindFirstObjectByType<Player>();
+        if (player != null)
+            playerTransform = player.GetComponent<Transform>();
+    }
+
     void FollowPlayer()
     {
-        if (player != null)
-            transform.position = new Vector3(player.position.x + cameraOffset.x, player.position.y + cameraOffset.y, cameraOffset.z);
+        if (playerTransform != null)
+            transform.position = new Vector3(playerTransform.position.x + cameraOffset.x, playerTransform.position.y + cameraOffset.y, cameraOffset.z);
     }
 }
