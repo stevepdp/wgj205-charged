@@ -13,16 +13,19 @@ public class FullscreenManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if ((Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Return)) ||
-            (Input.GetKey(KeyCode.LeftCommand) && Input.GetKeyDown(KeyCode.Return)))
+        if ((Input.GetKey(KeyCode.LeftAlt) && Input.GetKeyDown(KeyCode.F))
+            || (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.F))
+            || (Input.GetKey(KeyCode.LeftCommand) && Input.GetKeyDown(KeyCode.F))
+            || (Input.GetKeyDown(KeyCode.Escape)))
         {
             if (Screen.fullScreen)
             {
-                Screen.SetResolution(1280, 720, false);
+                Screen.SetResolution(600, 600, false);
             }
             else
             {
-                Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, true);
+                //Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, true);
+                Screen.SetResolution(600, 600, true);
             }
         }
     }

@@ -132,7 +132,7 @@ public class Player : MonoBehaviour
 
     void PlayerInvertCharge()
     {
-        if (Input.GetKeyDown("space") || Input.GetButtonDown("Fire3") || Input.GetButtonDown("Fire4"))
+        if (Input.GetButtonDown("Fire3") || Input.GetButtonDown("Fire4"))
         {
             _playerChargeState = !_playerChargeState;
             PlayerRejectStorageBox();
@@ -190,12 +190,12 @@ public class Player : MonoBehaviour
 
                     if (_directionFacing == "right")
                     {
-                        Debug.Log("Fire 1");
+                        //Debug.Log("Fire 1");
                         child.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(7.5f, 0), ForceMode2D.Impulse); // FIRE RIGHT
                     }
                     else
                     {
-                        Debug.Log("Fire 2");
+                        //Debug.Log("Fire 2");
                         child.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(-7.5f, 0), ForceMode2D.Impulse); // FIRE LEFT
                     }
                 }
@@ -232,7 +232,7 @@ public class Player : MonoBehaviour
 
     void PlayerJump()
     {
-        if ((Input.GetKeyDown(KeyCode.UpArrow) || Input.GetButtonDown("Fire1") || Input.GetButtonDown("Fire2"))
+        if ((Input.GetButtonDown("Fire1") || (Input.GetButtonDown("Fire2")))
             && (isGrounded || Time.time - lastTimeGrounded <= rememberGroundedFor || additionalJumps > 0))
         {
             SoundManager.PlaySound("jump");

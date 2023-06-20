@@ -7,7 +7,7 @@ public class SceneSwitch : MonoBehaviour {
 
     void LateUpdate()
     {
-        Switch();
+        //Switch();
     }
 
     void Switch() 
