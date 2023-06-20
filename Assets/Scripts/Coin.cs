@@ -15,7 +15,8 @@ public class Coin : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             gameManager._coinCount++;
-            SoundManager.PlaySound("coin");
+            if (SoundManager.Instance != null)
+                SoundManager.Instance.PlaySound("coin");
             Destroy(gameObject);
         }
     }

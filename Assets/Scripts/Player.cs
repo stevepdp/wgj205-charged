@@ -115,7 +115,8 @@ public class Player : MonoBehaviour
         if (colliders != null)
         {
             isGrounded = true;
-            if (_landingSoundCanPlay && _rigidBody.velocity.y <= 0) SoundManager.PlaySound("land");
+            if (_landingSoundCanPlay && _rigidBody.velocity.y <= 0 && SoundManager.Instance != null)
+                SoundManager.Instance.PlaySound("land");
             additionalJumps = defaultAdditionalJumps;
             _landingSoundCanPlay = false;
         }
@@ -235,7 +236,8 @@ public class Player : MonoBehaviour
         if ((Input.GetButtonDown("Fire1") || (Input.GetButtonDown("Fire2")))
             && (isGrounded || Time.time - lastTimeGrounded <= rememberGroundedFor || additionalJumps > 0))
         {
-            SoundManager.PlaySound("jump");
+            if (SoundManager.Instance != null)
+                SoundManager.Instance.PlaySound("jump");
             _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, _jumpForce);
             additionalJumps--;
             _landingSoundCanPlay = true;

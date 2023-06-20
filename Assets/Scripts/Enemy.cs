@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -21,15 +20,17 @@ public class Enemy : MonoBehaviour
         if (other.transform.CompareTag("Player"))
         {
             _player.OnPlayerDead();
-            SoundManager.PlaySound("dead");
+            if (SoundManager.Instance != null)
+                SoundManager.Instance.PlaySound("dead");
             StartCoroutine(RestartScene());
         }
         else if (other.transform.CompareTag("Box"))
         {
             if (other.transform.GetComponent<StorageBox>().isDeadly)
             {
-                Object.Destroy(gameObject); // kill enemy
-                SoundManager.PlaySound("dead");
+                Object.Destroy(gameObject);
+                if (SoundManager.Instance != null)
+                    SoundManager.Instance.PlaySound("dead");
             }
         }
     }

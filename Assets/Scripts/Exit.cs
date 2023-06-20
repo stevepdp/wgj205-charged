@@ -20,7 +20,8 @@ public class Exit : MonoBehaviour
         {
             _player._playerIsExiting = true;
             coinTotalTracker._totalGameCoins += _gameManager._coinCount;
-            SoundManager.PlaySound("exit");
+            if (SoundManager.Instance != null)
+                SoundManager.Instance.PlaySound("exit");
             StartCoroutine(NextScene());
         }
     }

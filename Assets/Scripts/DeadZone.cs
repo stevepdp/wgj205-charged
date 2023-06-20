@@ -1,20 +1,15 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class DeadZone : MonoBehaviour
 {
-    public void Start()
-    {
-
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
-            SoundManager.PlaySound("dead");
+            if (SoundManager.Instance != null)
+                SoundManager.Instance.PlaySound("dead");
             other.GetComponent<Player>().OnPlayerDead();
             StartCoroutine(PlayerDead());
         }
