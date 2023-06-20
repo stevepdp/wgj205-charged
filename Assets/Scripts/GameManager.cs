@@ -1,5 +1,5 @@
+using System;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public static event Action<int> OnCoinValueChange;
+
     // ENCAPSULATION (getter, setter) -- for Unity Learn: Junior Programmer pathway
     int coinCount;
     public int CoinCount
@@ -23,23 +25,20 @@ public class GameManager : MonoBehaviour
         get { return coinCount; }
         set { 
             if (value > 0)
+            {
                 coinCount = value;
+                OnCoinValueChange?.Invoke(coinCount);
+            }
             else
+            {
                 Debug.LogError("Incoming value must be greater than 0");
+            }
         }
     }
-
-    [SerializeField] Text coinDisplay;
 
     void Awake()
     {
         EnforceSingleInstance();
-        SetGameDefaults();
-    }
-
-    void LateUpdate()
-    {
-        coinDisplay.text = coinCount.ToString(); // TODO: handle this with events
     }
 
     void EnforceSingleInstance()
@@ -50,10 +49,5 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
 
         DontDestroyOnLoad(gameObject);
-    }
-
-    void SetGameDefaults()
-    {
-        coinCount = 0;
     }
 }
