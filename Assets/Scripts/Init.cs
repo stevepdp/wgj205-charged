@@ -16,6 +16,10 @@ public class Init : MonoBehaviour
         for (int i = 0; i < oldCoinTotalTracker.Length; i++)
             DestroyImmediate(oldCoinTotalTracker[i]);
 
+        GameObject[] oldFullscreenManager = GameObject.FindGameObjectsWithTag("FullscreenManager");
+        for (int i = 0; i < oldFullscreenManager.Length; i++)
+            DestroyImmediate(oldFullscreenManager[i]);
+
         GameObject[] oldGameManager = GameObject.FindGameObjectsWithTag("GameManager");
         for (int i = 0; i < oldGameManager.Length; i++)
             DestroyImmediate(oldGameManager[i]);
