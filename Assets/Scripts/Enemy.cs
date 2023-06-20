@@ -4,22 +4,21 @@ using UnityEngine.SceneManagement;
 
 public class Enemy : MonoBehaviour
 {
-    public GameManager _gameManager;
-    public Player _player;
+    const byte RESTART_TIMEOUT = 2;
 
-    void Start()
+    Player player;
+
+    void Awake()
     {
+        player = FindFirstObjectByType<Player>();
     }
 
-    void Update()
-    {
-    }
-
-    private void OnCollisionEnter2D(Collision2D other)
+    void OnCollisionEnter2D(Collision2D other)
     {
         if (other.transform.CompareTag("Player"))
         {
-            _player.OnPlayerDead();
+            if (player != null)
+                player.OnPlayerDead();
             if (SoundManager.Instance != null)
                 SoundManager.Instance.PlaySound("dead");
             StartCoroutine(RestartScene());
@@ -28,16 +27,16 @@ public class Enemy : MonoBehaviour
         {
             if (other.transform.GetComponent<StorageBox>().isDeadly)
             {
-                Object.Destroy(gameObject);
                 if (SoundManager.Instance != null)
                     SoundManager.Instance.PlaySound("dead");
+                Destroy(gameObject);
             }
         }
     }
 
     IEnumerator RestartScene()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(RESTART_TIMEOUT);
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
