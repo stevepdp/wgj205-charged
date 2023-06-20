@@ -1,43 +1,59 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    // Game Values
-    public int _coinCount;
-    public Text coinDisplay;
+    static GameManager instance;
+    public static GameManager Instance
+    {
+        get
+        {
+            if (instance == null)
+                instance = GameObject.FindObjectOfType<GameManager>();
+            if (instance == null)
+                instance = Instantiate(new GameObject("GameManager")).AddComponent<GameManager>();
+            return instance;
+        }
+    }
 
+    // ENCAPSULATION (getter, setter) -- for Unity Learn: Junior Programmer pathway
+    int coinCount;
+    public int CoinCount
+    {
+        get { return coinCount; }
+        set { 
+            if (value > 0)
+                coinCount = value;
+            else
+                Debug.LogError("Incoming value must be greater than 0");
+        }
+    }
+
+    [SerializeField] Text coinDisplay;
 
     void Awake()
     {
+        EnforceSingleInstance();
         SetGameDefaults();
-    }
-
-    void Start()
-    {
-        
     }
 
     void LateUpdate()
     {
-        coinDisplay.text = _coinCount.ToString();
+        coinDisplay.text = coinCount.ToString(); // TODO: handle this with events
     }
 
-   public void OnRoomRestart()
+    void EnforceSingleInstance()
     {
-    }
+        if (instance == null)
+            instance = this;
+        else if (instance != this)
+            Destroy(gameObject);
 
-    public void OnGameOver()
-    {
-        Debug.Log("GameOver condition met. Going to end.");
-        SceneManager.LoadScene("99_End");
+        DontDestroyOnLoad(gameObject);
     }
 
     void SetGameDefaults()
     {
-        _coinCount = 0;
+        coinCount = 0;
     }
 }
