@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1215277195108010749}
   - component: {fileID: 1215277195108010747}
   m_Layer: 0
-  m_Name: BGM
+  m_Name: MusicManager
   m_TagString: MusicManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
