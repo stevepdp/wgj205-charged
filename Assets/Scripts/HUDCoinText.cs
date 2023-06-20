@@ -10,6 +10,11 @@ public class HUDCoinText : MonoBehaviour
         coinText = GetComponent<Text>();
     }
 
+    void Start()
+    {
+        GetCurrentCoins();
+    }
+
     void OnEnable()
     {
         GameManager.OnCoinValueChange += UpdateCoinCount;
@@ -18,6 +23,12 @@ public class HUDCoinText : MonoBehaviour
     void OnDisable()
     {
         GameManager.OnCoinValueChange -= UpdateCoinCount;
+    }
+
+    void GetCurrentCoins()
+    {
+        if (GameManager.Instance != null && coinText != null)
+            coinText.text = GameManager.Instance.CoinCount.ToString();
     }
 
     void UpdateCoinCount(int newCoinValue)
