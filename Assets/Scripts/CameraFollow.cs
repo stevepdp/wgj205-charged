@@ -1,14 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    public Transform _player;
-    public Vector3 _offset;
+    [SerializeField] Transform player;
+    [SerializeField] Vector3 cameraOffset;
 
-    void Update()
+    void LateUpdate()
     {
-        transform.position = new Vector3(_player.position.x + _offset.x, _player.position.y + _offset.y, _offset.z); // Camera follows the player with specified offset positio
+        FollowPlayer();
+    }
+
+    void FollowPlayer()
+    {
+        if (player != null)
+            transform.position = new Vector3(player.position.x + cameraOffset.x, player.position.y + cameraOffset.y, cameraOffset.z);
     }
 }
