@@ -15,6 +15,7 @@ TagManager:
   - CoinTotalTracker
   - MusicManager
   - SoundManager
+  - FullscreenManager
   layers:
   - Default
   - TransparentFX
