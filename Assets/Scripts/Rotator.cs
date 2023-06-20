@@ -1,12 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Rotator : MonoBehaviour
 {
-    public int rotateSpeed = 4;
+    const float rotateSpeed = 1f;
 
     void Update()
+    {
+        Rotate();
+    }
+
+    void Rotate()
     {
         transform.Rotate(0, rotateSpeed, 0, Space.World);
     }
