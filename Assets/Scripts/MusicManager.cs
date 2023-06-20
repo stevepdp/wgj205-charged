@@ -1,62 +1,86 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MusicManager : MonoBehaviour
 {
-    private AudioSource _audioSource;
-    //public Transform musicCredit;
-    public AudioClip[] _trackList = new AudioClip[1];
-
-    private void Awake()
+    static MusicManager instance;
+    public static MusicManager Instance
     {
-        DontDestroyOnLoad(this.gameObject);
+        get
+        {
+            if (instance == null)
+                instance = GameObject.FindObjectOfType<MusicManager>();
+            if (instance == null)
+                instance = Instantiate(new GameObject("MusicManager")).AddComponent<MusicManager>();
+            return instance;
+        }
+    }
 
-        _audioSource = GetComponent<AudioSource>();
+    const float BGM_VOLUME = 1f;
+    const float PITCH_MOD = 1.04f;
+
+    AudioSource audioSource;
+    [SerializeField] AudioClip[] trackArray = new AudioClip[1];
+
+    void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+
+        EnforceSingleInstance();
     }
 
     void Start()
     {
-        SetNextTrackAndPlay(0, true, 1f); // this prefab is instanciated on notice. So it starts with track 0.
+        SetNextTrackAndPlay(0, true, BGM_VOLUME);
+    }
+
+    void EnforceSingleInstance()
+    {
+        if (instance == null)
+            instance = this;
+        else if (instance != this)
+            Destroy(gameObject);
+
+        DontDestroyOnLoad(gameObject);
     }
 
     public void PauseMusic()
     {
-        _audioSource.Pause();
+        if (audioSource != null)
+            audioSource.Pause();
     }
 
     public void PlayMusic()
     {
-        if (_audioSource.isPlaying) return;
-        _audioSource.pitch = 1.04f;
-        _audioSource.Play();
-        //Instantiate(musicCredit);
+        if (audioSource != null)
+        {
+            if (audioSource.isPlaying) return;
+            audioSource.pitch = PITCH_MOD;
+            audioSource.Play();
+        }
     }
 
     public void SetNextTrackAndPlay(int trackNumber, bool shouldLoop, float vol)
     {
-        StopMusic();
-
-        _audioSource.clip = _trackList[trackNumber];
-
-        if (shouldLoop)
+        if (audioSource != null)
         {
-            _audioSource.loop = true;
-        }
-        else
-        {
-            _audioSource.loop = false;
-        }
+            StopMusic();
 
-        _audioSource.volume = vol;
+            audioSource.clip = trackArray[trackNumber];
 
-        PlayMusic();
-        // trigger in-game credit if not [0]
+            if (shouldLoop)
+                audioSource.loop = true;
+            else
+                audioSource.loop = false;
+
+            audioSource.volume = vol;
+
+            PlayMusic();
+        }
     }
 
     public void StopMusic()
     {
-        Debug.Log("Music Manager: Stop message received");
-        _audioSource.Stop();
+        if (audioSource != null)
+            audioSource.Stop();
     }
 }
