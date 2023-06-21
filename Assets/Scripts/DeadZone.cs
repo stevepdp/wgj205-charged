@@ -1,24 +1,17 @@
-using System.Collections;
+using System;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class DeadZone : MonoBehaviour
 {
+    public static event Action OnPlayerHitDeadzone;
+
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
             if (SoundManager.Instance != null)
                 SoundManager.Instance.PlaySound("dead");
-            other.GetComponent<Player>().OnPlayerDead();
-            StartCoroutine(PlayerDead());
+            OnPlayerHitDeadzone?.Invoke();
         }
-    }
-
-    IEnumerator PlayerDead()
-    {
-        yield return new WaitForSeconds(2);
-
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

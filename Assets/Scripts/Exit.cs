@@ -4,13 +4,18 @@ using UnityEngine.SceneManagement;
 
 public class Exit : MonoBehaviour
 {
-    public Player _player;
+    Player player;
+
+    void Awake()
+    {
+        player = FindObjectOfType<Player>();
+    }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && player != null)
         {
-            _player._playerIsExiting = true;
+            player.isExiting = true;
             if (SoundManager.Instance != null)
                 SoundManager.Instance.PlaySound("exit");
             StartCoroutine(NextScene());
