@@ -11,7 +11,7 @@ public class PlayerHealth : MonoBehaviour
 
     Animator animator;
     bool isAlive = false;
-    int hp = 1;
+    [SerializeField] int hp = 1;
 
     public bool IsAlive
     {
@@ -41,7 +41,7 @@ public class PlayerHealth : MonoBehaviour
     void OnDisable()
     {
         DeadZone.OnPlayerHitDeadzone -= Kill;
-        Enemy.OnHitByEnemy += DeductHealth;
+        Enemy.OnHitByEnemy -= DeductHealth;
     }
 
     void Awake()
@@ -61,14 +61,18 @@ public class PlayerHealth : MonoBehaviour
         if (hp <= 0)
         {
             isAlive = false;
-            OnPlayerIsDead?.Invoke();
-            StartCoroutine(RestartScene());
+            PlayerDead();
         }
     }
 
     void Kill()
     {
         hp = 0;
+        PlayerDead();
+    }
+
+    void PlayerDead()
+    {
         if (animator != null)
             animator.SetTrigger("Dead");
         OnPlayerIsDead?.Invoke();
