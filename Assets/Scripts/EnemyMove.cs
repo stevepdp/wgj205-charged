@@ -4,9 +4,13 @@ public class EnemyMove : MonoBehaviour
 {
     Animator animator;
     [SerializeField] Transform[] Waypoints;
-
     [SerializeField] float moveSpeed = 1f;
     [SerializeField] int waypointIndex;
+
+    void Awake()
+    {
+        animator = GetComponent<Animator>();
+    }
 
     void Start()
     {
@@ -17,6 +21,16 @@ public class EnemyMove : MonoBehaviour
     void Update()
     {
         MoveToWaypoint();
+    }
+
+    void OnEnable()
+    {
+        PlayerHealth.OnPlayerIsDead += StopMoving;
+    }
+
+    void OnDisable()
+    {
+        PlayerHealth.OnPlayerIsDead -= StopMoving;
     }
 
     void MoveToWaypoint()
@@ -40,7 +54,6 @@ public class EnemyMove : MonoBehaviour
 
     void SetRunAnim()
     {
-        animator = GetComponent<Animator>();
         if (animator != null )
             animator.SetBool("Running", true);
     }
@@ -48,5 +61,12 @@ public class EnemyMove : MonoBehaviour
     void SetStartPos()
     {
         transform.position = Waypoints[waypointIndex].transform.position;
+    }
+
+    void StopMoving()
+    {
+        moveSpeed = 0;
+        if (animator != null)
+            animator.SetBool("Running", false);
     }
 }
