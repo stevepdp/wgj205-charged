@@ -1,20 +1,7 @@
 using UnityEngine;
 
-public class SoundManager : MonoBehaviour
+public class SoundManager : MonoSingleton<SoundManager>
 {
-    static SoundManager instance;
-    public static SoundManager Instance
-    {
-        get
-        {
-            if (instance == null)
-                instance = GameObject.FindObjectOfType<SoundManager>();
-            if (instance == null)
-                instance = Instantiate(new GameObject("SoundManager")).AddComponent<SoundManager>();
-            return instance;
-        }
-    }
-
     AudioClip coinGetSound,
               playerDeadSound,
               playerExitSound,
@@ -23,10 +10,8 @@ public class SoundManager : MonoBehaviour
 
     AudioSource audioSource;
 
-    void Awake()
+    public override void Awake()
     {
-        EnforceSingleInstance();
-
         coinGetSound    = Resources.Load<AudioClip>("SFX/coin_02");
         playerDeadSound = Resources.Load<AudioClip>("SFX/dead_01");
         playerExitSound = Resources.Load<AudioClip>("SFX/exit_04");
@@ -34,16 +19,6 @@ public class SoundManager : MonoBehaviour
         playerLandSound = Resources.Load<AudioClip>("SFX/land_04");
 
         audioSource = GetComponent<AudioSource>();
-    }
-
-    void EnforceSingleInstance()
-    {
-        if (instance == null)
-            instance = this;
-        else if (instance != this)
-            Destroy(gameObject);
-
-        DontDestroyOnLoad(gameObject);
     }
 
     public void PlaySound(string clip)

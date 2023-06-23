@@ -64,15 +64,18 @@ public class StorageBox : MonoBehaviour
 
     void SeekPlayer()
     {
-        if (boxCharge > 0 && (distanceFromPlayer < distanceThreshold) && player.GetComponent<Player>()._playerChargeNo != boxCharge) // only opposites attract
+        if (Player.Instance != null)
         {
-            // player is left of me
-            if (directionNo == 1)
-                gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0.33f, 0), ForceMode2D.Impulse); // FIRE LEFT
-            
-            // player is right of me
-            else if (directionNo == -1)
-                gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(-0.33f, 0), ForceMode2D.Impulse); // FIRE RIGHT  
+            if (boxCharge > 0 && (distanceFromPlayer < distanceThreshold) && Player.Instance.Charge != boxCharge) // only opposites attract
+            {
+                // player is left of me
+                if (directionNo == 1)
+                    gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0.33f, 0), ForceMode2D.Impulse); // FIRE LEFT
+
+                // player is right of me
+                else if (directionNo == -1)
+                    gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(-0.33f, 0), ForceMode2D.Impulse); // FIRE RIGHT  
+            }
         }
     }
 }
