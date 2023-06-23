@@ -1,12 +1,5 @@
 using UnityEngine;
 
-enum charge
-{
-    neutral,
-    negative,
-    positive
-}
-
 public class StorageBox : MonoBehaviour
 {
     Player player;
