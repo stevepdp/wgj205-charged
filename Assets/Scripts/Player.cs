@@ -5,9 +5,6 @@ public class Player : MonoBehaviour
     PlayerHealth playerHealth;
 
 
-
-
-
     // player play state
     bool playerChargeState = true; // false means a negetive charge (also default), true is a positive charge
     [SerializeField]
@@ -46,12 +43,7 @@ public class Player : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
     private Rigidbody2D _rigidBody;
 
-    enum charge
-    {
-        neutral,  //0
-        negative, //1
-        positive  //2
-    }
+    
 
     void Awake()
     {
@@ -123,12 +115,12 @@ public class Player : MonoBehaviour
         if (playerChargeState)
         {
             //mTextOverHead.text = "+";
-            _playerChargeNo = (int) charge.positive;
+            _playerChargeNo = (int) Charge.POSITIVE;
         }
         else
         {
             //mTextOverHead.text = "-";
-            _playerChargeNo = (int) charge.negative;
+            _playerChargeNo = (int) Charge.NEGATIVE;
         }
     }
 
