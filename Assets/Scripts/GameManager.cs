@@ -36,12 +36,18 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void Awake()
+    void OnDestroy()
     {
-        EnforceSingleInstance();
+        if (instance == this)
+            instance = null;
     }
 
-    void EnforceSingleInstance()
+    void Awake()
+    {
+        EnforceSingleton();
+    }
+
+    void EnforceSingleton()
     {
         if (instance == null)
             instance = this;

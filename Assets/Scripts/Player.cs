@@ -1,14 +1,14 @@
+using Enums;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+// INHERITANCE -- for Unity Learn: Junior Programmer pathway
+public class Player : MonoSingleton<Player>
 {
     PlayerHealth playerHealth;
 
-
     // player play state
-    bool playerChargeState = true; // false means a negetive charge (also default), true is a positive charge
-    [SerializeField]
-    public int _playerChargeNo;
+    bool chargeState = true; // false means a negetive charge (also default), true is a positive charge. Also...this might be redundant - refer to charge instead
+    int charge;
     public string directionFacing = "right";
     public bool isExiting = false;
     public bool isRunning = false;
@@ -27,7 +27,6 @@ public class Player : MonoBehaviour
     public Transform grabDetect;
     public Transform boxHolder;
     public float rayDist;
-
     
     [SerializeField]
     private float _jumpForce = 0.01f;
@@ -43,10 +42,15 @@ public class Player : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
     private Rigidbody2D _rigidBody;
 
-    
-
-    void Awake()
+    public int Charge
     {
+        get { return charge; }
+    }
+
+    // POLYMORPHISM -- for Unity Learn: Junior Programmer pathway
+    public override void Awake()
+    {
+        base.Awake();
         playerHealth = GetComponent<PlayerHealth>();
     }
 
@@ -55,9 +59,6 @@ public class Player : MonoBehaviour
         _animator = GetComponent<Animator>();
         _rigidBody = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
-
-        //transform.position = new Vector3(-1, 0, 0);
-
         SetPlayerDefaults();
     }
 
@@ -73,7 +74,7 @@ public class Player : MonoBehaviour
 
             // Update animation bools
             _animator.SetBool("Grounded", isGrounded);
-            _animator.SetBool("Charge", playerChargeState);
+            _animator.SetBool("Charge", chargeState);
             _animator.SetBool("Running", isRunning);
         }
 
@@ -108,19 +109,19 @@ public class Player : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire3") || Input.GetButtonDown("Fire4"))
         {
-            playerChargeState = !playerChargeState;
+            chargeState = !chargeState;
             PlayerRejectStorageBox();
         }
 
-        if (playerChargeState)
+        if (chargeState)
         {
             //mTextOverHead.text = "+";
-            _playerChargeNo = (int) Charge.POSITIVE;
+            charge = (int) ChargeType.POSITIVE;
         }
         else
         {
             //mTextOverHead.text = "-";
-            _playerChargeNo = (int) Charge.NEGATIVE;
+            charge = (int) ChargeType.NEGATIVE;
         }
     }
 
@@ -131,7 +132,7 @@ public class Player : MonoBehaviour
         if (grabCheck.collider != null && grabCheck.collider.tag == "Box")
         {
             //Debug.Log("Found storage");
-            if (grabCheck.collider.gameObject.GetComponent<StorageBox>().boxCharge != _playerChargeNo && !_playerHasBox)
+            if (grabCheck.collider.gameObject.GetComponent<StorageBox>().boxCharge != charge && !_playerHasBox)
             {
                 // attraction - can pick up
                 _playerHasBox = true;
