@@ -2,19 +2,21 @@ using UnityEngine;
 
 public class StorageBox : MonoBehaviour
 {
+    const byte DEADLY_SPEED_THRESHOLD = 1;
     Player player;
+    Rigidbody2D rb;
     Transform playerTransform;
     public bool isDeadly = false;
     [SerializeField] float distanceFromPlayer;
     [SerializeField] float distanceThreshold = 1f;
     [SerializeField] float directionNo;
     public int boxCharge;
-
+    
     void Awake()
     {
+        rb = GetComponent<Rigidbody2D>();
         player = FindObjectOfType<Player>();
-        if (player != null)
-            playerTransform = player.GetComponent<Transform>();
+        playerTransform = player?.GetComponent<Transform>();
     }
 
     void Update()
@@ -37,14 +39,14 @@ public class StorageBox : MonoBehaviour
 
     void CalcDistanceFromPlayer()
     {
-        if (boxCharge > 0) distanceFromPlayer = Vector3.Distance(player.GetComponent<Transform>().position, transform.position);
+        if (boxCharge > 0) distanceFromPlayer = Vector3.Distance(playerTransform.position, transform.position);
     }
 
     void CalcDirectionFacingFromPlayer()
     {
         if (boxCharge > 0)
         {
-            Vector3 heading = player.GetComponent<Transform>().position - transform.position;
+            Vector3 heading = playerTransform.position - transform.position;
             directionNo = AngleDir(transform.forward, heading, transform.up);
             // this also determines in which direction force should be applied to the object. Right to left for left movement, left to right for right movement
         }
@@ -52,12 +54,10 @@ public class StorageBox : MonoBehaviour
 
     void DeadlyCheck()
     {
-        if (boxCharge > 0)
+        if (rb != null && boxCharge > 0)
         {
-            float maxSpeed = 1.0f; // units/sec
-            Rigidbody2D rb = GetComponent<Rigidbody2D>();
             Vector2 vel = rb.velocity;
-            if (vel.magnitude < maxSpeed)
+            if (vel.magnitude < DEADLY_SPEED_THRESHOLD)
                 isDeadly = false;
         }
     }
