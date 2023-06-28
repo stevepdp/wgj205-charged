@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Rotator : MonoBehaviour
 {
-    const float rotateSpeed = 1f;
+    const float ROTATE_SPEED = 1f;
 
     void Update()
     {
@@ -11,6 +11,6 @@ public class Rotator : MonoBehaviour
 
     void Rotate()
     {
-        transform.Rotate(0, rotateSpeed, 0, Space.World);
+        transform.Rotate(0, ROTATE_SPEED, 0, Space.World);
     }
 }
