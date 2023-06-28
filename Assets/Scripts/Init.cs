@@ -11,11 +11,6 @@ public class Init : MonoBehaviour
 
     void CleanupObjects()
     {
-        // TODO: candidate for the game manager singleton, signaling for the HUD
-        GameObject[] oldCoinTotalTracker = GameObject.FindGameObjectsWithTag("CoinTotalTracker");
-        for (int i = 0; i < oldCoinTotalTracker.Length; i++)
-            DestroyImmediate(oldCoinTotalTracker[i]);
-
         GameObject[] oldFullscreenManager = GameObject.FindGameObjectsWithTag("FullscreenManager");
         for (int i = 0; i < oldFullscreenManager.Length; i++)
             DestroyImmediate(oldFullscreenManager[i]);
@@ -23,7 +18,6 @@ public class Init : MonoBehaviour
         GameObject[] oldGameManager = GameObject.FindGameObjectsWithTag("GameManager");
         for (int i = 0; i < oldGameManager.Length; i++)
             DestroyImmediate(oldGameManager[i]);
-
 
         GameObject[] oldMusicManager = GameObject.FindGameObjectsWithTag("MusicManager");
         for (int i = 0; i < oldMusicManager.Length; i++)
